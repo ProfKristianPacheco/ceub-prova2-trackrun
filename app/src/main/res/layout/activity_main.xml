@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="@color/black"
         android:text="Cadastrar Exercício"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,10 +58,10 @@
 
     <TextView
         android:id="@+id/textViewInformacoes"
-        android:layout_width="399dp"
-        android:layout_height="171dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="361dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Informações"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,8 +71,8 @@
         android:id="@+id/buttonExcluir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="@color/black"
         android:text="Remover Último Exercício"
         app:layout_constraintStart_toEndOf="@+id/buttonSalvar"
@@ -91,7 +91,16 @@
             android:id="@+id/editTextDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Corrida ou Caminhada?" />
+            android:hint="Descrição do Exercício" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ListView
+        android:id="@+id/listViewExercicios"
+        android:layout_width="406dp"
+        android:layout_height="248dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="21dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewInformacoes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

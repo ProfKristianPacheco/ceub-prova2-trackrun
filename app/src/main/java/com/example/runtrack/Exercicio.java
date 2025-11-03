@@ -10,14 +10,13 @@ public class Exercicio {
     private int id;
     @ColumnInfo(name = "descricao")
     private String descricao;
-
     @ColumnInfo(name = "distancia")
-    private float distancia;
+    private double distancia;
 
-    public Exercicio(int id, String descricao, float distancia) {
-        this.id = id;
-        this.descricao = descricao;
-        this.distancia = distancia;
+    //TODO: SOBRESCREVER O MÉTODO "toString" PARA EXIBIR AS INFORMAÇÕES TEXTUAIS DE CADA EXERCÍCIO CADASTRADO
+    @Override
+    public String toString() {
+        return "";
     }
 
     public int getId() {
@@ -36,11 +35,11 @@ public class Exercicio {
         this.descricao = descricao;
     }
 
-    public float getDistancia() {
+    public double getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(float distancia) {
+    public void setDistancia(double distancia) {
         this.distancia = distancia;
     }
 }

@@ -2,8 +2,10 @@ package com.example.runtrack;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,6 +13,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,8 +21,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText distancia;
     private Button salvar, excluir;
     private TextView informacoes;
+    private ListView listViewExercicios;
+    private List<Exercicio> listaExercicios = new ArrayList();
+    private ArrayAdapter<Exercicio> adapter;
     private MyDatabase db;
-    private int distanciaTotal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         distancia = findViewById(R.id.editTextDistancia);
         salvar = findViewById(R.id.buttonSalvar);
         informacoes = findViewById(R.id.textViewInformacoes);
+        listViewExercicios = findViewById(R.id.listViewExercicios);
+
+        //INICIALIZANDO O ADAPTER QUE EXIBIRÁ A LISTA DE EXERCÍCIOS (listaExercicios) NO LISTVIEW (listViewExercicios)
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaExercicios);
+        listViewExercicios.setAdapter(adapter);
 
         //CRIAÇÃO DO BANCO DE DADOS NA VARIÁVEL "db"
         db = Room.databaseBuilder(getApplicationContext(), MyDatabase.class, "exercicios.db").build();
@@ -67,31 +77,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buscarExercicios() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<Exercicio> todosExercicios = db.exercicioDAO().buscaTodosExercicios();
-                //TODO: BUSCAR O ÚLTIMO EXERCÍCIO CADASTRADO, E O MAIOR EXERCÍCIO CADASTRADO
-                distanciaTotal = 0;
-                if (!todosExercicios.isEmpty()) {
-                    for (Exercicio exercicioAtual : todosExercicios) {
-                        distanciaTotal += exercicioAtual.getDistancia();
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            descricao.setText("");
-                            distancia.setText("");
-                            Toast.makeText(MainActivity.this, "Exercício Cadastrado!", Toast.LENGTH_SHORT).show();
-
-                            //TODO: ATUALIZAR A TELA COM AS INFORMAÇÕES DO ÚLTIMO EXERCÍCIO CADASTRADO, E DO MAIOR EXERCÍCIO CADASTRADO
-                            informacoes.setText("Distância total percorrida: " + distanciaTotal + " metros");
-                        }
-                    });
-                }else{
-                    informacoes.setText("Nenhum exercício cadastrado até o momento");
-                }
-            }
-        }).start();
+        //TODO: BUSCAR TODOS OS EXERCÍCIOS NO BANCO DE DADOS, E EXIBÍ-LOS NO LISTVIEW
+        //OBS: LEMBRAR QUE O ACESSO AO BANCO DE DADOS PRECISA SER FEITO EM UMA NOVA THREAD
+        //OBS: LEMBRAR QUE A LISTA DE EXERCÍCIOS DEVE SER ATUALIZADA A CADA INSERÇÃO/REMOÇÃO
+        //PONTO EXTRA PARTE 2: EXIBIÇÃO/ATUALIZAÇÃO, NO TEXTVIEW, DA DISTÂNCIA TOTAL PERCORRIDA E DO MAIOR EXERCÍCIO CADASTRADO.
     }
 }
